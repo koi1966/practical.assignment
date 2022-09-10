@@ -14,6 +14,17 @@ public record ServiceUsers(UsersRepository usersRepository) {
         return usersRepository.findByUserAge(age);
     }
 
+    public Users AddUsers(Users users) {
+        log.info("User add: {} ", users);
+        return usersRepository.save(users);
+    }
+
+    public boolean DeleteUsers(Long id) {
+        log.info("User delete on : {} ", id);
+        usersRepository.deleteById(id);
+        return null;
+    }
+
 
 }
 

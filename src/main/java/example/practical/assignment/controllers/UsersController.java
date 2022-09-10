@@ -12,7 +12,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UsersController {
 
     private final ServiceUsers serviceUsers;
@@ -22,18 +22,17 @@ public class UsersController {
     public UsersController(ServiceUsers serviceUsers) {
         this.serviceUsers = serviceUsers;
     }
+//    2.1. Create user. It allows to register users who are more than [18] years old.
+//         The value [18] should be taken from properties file.
 
-    //  2.1. Create user. It allows to register users who are more than [18] years old.
-//       The value [18] should be taken from properties file.
     @PostMapping(value = "/add")
     public UsersDto saveUsers(@RequestBody UsersDto dto) {
-//
-//        Users user = mapper.usersDtoToUsers(dto);
-//
-//        Users saved = serviceUser.AddUsers(user);
-//        log.info("UserDto: {}, saved user: {}", dto, saved);
 
-        return null; //mapper.usersToUsersDto(saved);
+        Users users = mapper.usersDtoToUsers(dto);
+        Users saved = serviceUsers.AddUsers(users);
+        log.info("UserDto: {}, saved user: {}", dto, saved);
+
+        return mapper.usersToUsersDto(saved);
     }
 
 //    2.2. Edit user
@@ -49,7 +48,7 @@ public class UsersController {
     }
 
 //    2.3. Replace user
-@PostMapping(value = "/replace")
+@PutMapping(value = "/edit")
 public UsersDto replaceUsers(@RequestBody UsersDto dto) {
 
 //        Users user = mapper.usersDtoToUsers(dto);
@@ -60,13 +59,11 @@ public UsersDto replaceUsers(@RequestBody UsersDto dto) {
     return null;
 }
 //2.4. Delete user
-@PostMapping(value = "/replace")
-public UsersDto deleteUsers(@RequestBody UsersDto dto) {
+@PostMapping(value = "/delete")
+public UsersDto deleteUsers(@RequestParam long id) {
 
-//        Users user = mapper.usersDtoToUsers(dto);
-//
-//        Users saved = serviceUser.AddUsers(user);
-//        log.info("UserDto: {}, saved user: {}", dto, saved);
+        serviceUsers.DeleteUsers(id);
+       log.info("Users delete on id: {}", id);
 
     return null;
 }
@@ -78,6 +75,6 @@ public UsersDto deleteUsers(@RequestBody UsersDto dto) {
     public List<UsersDto> searchUser(@RequestParam int age) {
         log.info("All users age > {}", age);
         List<Users> users = serviceUsers.usersList(age);
-        return null; //mapper.map(users);
+        return mapper.map(users);
     }
 }
