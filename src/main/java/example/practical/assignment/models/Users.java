@@ -7,6 +7,8 @@ import lombok.ToString;
 import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -25,12 +27,18 @@ public class Users {
     @NonNull
     private String name;
 
+//    2.1. Create user. It allows to register users who are more than [18] years old.
+//    The value [18] should be taken from properties file.
     @NonNull
     private String lastName;
+
+    @Min(18)
+    private Integer age;
 
     @NonNull
     private LocalDate born;
 
+    @Email
     private String email;
 
     private String Address;
