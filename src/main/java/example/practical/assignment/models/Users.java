@@ -25,14 +25,23 @@ public class Users {
     @NonNull
     private String name;
 
-    private LocalDate born;
-
-    private String email;
-    private String password;
-
+    @NonNull
     private String lastName;
 
-    @Enumerated(value = EnumType.STRING)
+    @NonNull
+    private LocalDate born;
+
+    @Email
+    private String email;
+
+    private String Address;
+
+    private String phone;
 
 }
-
+//1.1. Электронная почта (обязательно). Добавить проверку по шаблону электронной почты
+//        1.2. Имя (обязательно)
+//        1.3. фамилия (обязательно)
+//        1.4. Дата рождения (обязательно). Значение должно быть раньше текущей даты
+//        1.5. Адрес (необязательно)
+//        1.6. Телефонный номер (не обязательно)
