@@ -1,6 +1,6 @@
 package example.practical.assignment.models.repo;
 
-import example.practical.assignment.models.Users;
+import example.practical.assignment.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -8,12 +8,12 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.Optional;
 
-public interface UsersRepository extends JpaRepository<Users, Long> {
+public interface UsersRepository extends JpaRepository<User, Long> {
 
-    Optional<Users> findByEmail(String email);
+    Optional<User> findByEmail(String email);
 
-    @Query(nativeQuery = true,
-            value = "SELECT * FROM users WHERE age >= :age")
-    List<Users> findByUserAge(@Param("age") long age);
+//    @Query(nativeQuery = true,
+//            value = "SELECT * FROM user WHERE age >= :age")
+//    List<User> findByUserAge(@Param("age") long age);
 
 }
