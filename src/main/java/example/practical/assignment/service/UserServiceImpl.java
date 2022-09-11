@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -25,10 +26,9 @@ public class UserServiceImpl implements UserService {
         return usersRepository.findAll();
     }
     @Override
-    public User addUsers(User user) throws AgeException {
+    public User addUsers(User user) {
 
         if ( user.getUserAge() < userAge ) {
-//            throw new IllegalArgumentException("age");
             throw new AgeException("User under 18 years old  ");
         }
         log.info("User add: {}", user);
@@ -39,6 +39,22 @@ public class UserServiceImpl implements UserService {
         log.info("User delete on : {} ", id);
         usersRepository.deleteById(id);
         return null;
+    }
+    @Override
+    public User findUserDate(long id, User input) {
+        log.info("Find user by id : {}", id);
+        Optional<User> userOptional = usersRepository.findById(id);
+        // проверить на null
+        User user = userOptional.get();
+        user.setName(input.getName());
+        user.setName(input.getName());
+        user.setName(input.getName());
+        user.setName(input.getName());
+        user.setName(input.getName());
+
+        return  usersRepository.save(user);
+
+
     }
 
 }

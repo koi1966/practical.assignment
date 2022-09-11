@@ -21,8 +21,8 @@ public class UsersDto {
     @NotNull
     @PastOrPresent
     private LocalDate born;
-    @Email
-    @NotBlank
+    @Email(message = "Bad email.")
+    @NotBlank(message = "Email not blank")
     private String email;
     private String address;
     private String phone;

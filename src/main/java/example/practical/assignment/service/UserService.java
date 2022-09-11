@@ -11,4 +11,6 @@ public interface UserService {
     User addUsers(User user) throws AgeException;
 
     User deleteUsers(Long id);
+
+    User findUserDate(long id, User user);
 }
