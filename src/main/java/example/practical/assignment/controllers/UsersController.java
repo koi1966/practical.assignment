@@ -1,12 +1,16 @@
 package example.practical.assignment.controllers;
 
+import example.practical.assignment.exception.AgeException;
 import example.practical.assignment.mapper.Mapper;
 import example.practical.assignment.models.User;
 import example.practical.assignment.models.dto.UsersDto;
+import example.practical.assignment.service.ErrorMessage;
 import example.practical.assignment.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.mapstruct.factory.Mappers;
-import org.springframework.validation.annotation.Validated;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -25,13 +29,13 @@ public class UsersController {
 //         The value [18] should be taken from properties file.
 
     @PostMapping
-    public UsersDto saveUsers(@Valid @RequestBody UsersDto dto) {
-
+    public UsersDto saveUsers(@Valid @RequestBody UsersDto dto , Errors errors) {
+        if (errors.hasErrors()) {
+            throw new AgeException("Bad Email ");
+//            return new ResponseEntity(new ApiErrors(errors), HttpStatus.BAD_REQUEST);
+        }
         User user = mapper.usersDtoToUsers(dto);
-
         User saved = userService.addUsers(user);
-
-        log.info("UserDto: {}, saved user: {}", dto, saved);
 
         return mapper.usersToUsersDto(saved);
     }
@@ -48,12 +52,11 @@ public class UsersController {
         return null;
     }
 
-//2.4. Delete user
+
 @DeleteMapping()
 public UsersDto deleteUsers(@RequestParam long id) {
         userService.deleteUsers(id);
-       log.info("Users delete on id: {}", id);
-
+       log.info("User delete id: {}", id);
     return null;
 }
 
@@ -65,5 +68,12 @@ public UsersDto deleteUsers(@RequestParam long id) {
         log.info("All users age > {}", age);
         List<User> users = userService.usersList(age);
         return mapper.map(users);
+    }
+    @ExceptionHandler(AgeException.class)
+    public ResponseEntity<ErrorMessage> handleException(AgeException exception) {
+        log.error(exception.getMessage(), exception);
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(new ErrorMessage(exception.getMessage()));
     }
 }
