@@ -90,7 +90,6 @@ public class UserServiceImpl implements UserService {
     public User editUser(long id, User input) {
         log.info("Replace user by id : {}", id);
         Optional<User> userOptional = usersRepository.findById(id);
-        // проверить на null
         User user = userOptional.get();
         user.setName(input.getName());
         user.setLastName(input.getLastName());
