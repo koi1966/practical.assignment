@@ -47,9 +47,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findUserBornBetween(LocalDate dateFirst, LocalDate dateLast) {
         log.info("Find all users by date first : {} on date last {}", dateFirst,dateLast);
-//      List<User> userList = usersRepository.findByBornBetween(dateFirst,dateLast);
-        // проверить на null
-        
+
         return usersRepository.findByBornBetween(dateFirst,dateLast);
     }
 
