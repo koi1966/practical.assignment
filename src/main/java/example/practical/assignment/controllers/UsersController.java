@@ -40,18 +40,19 @@ public class UsersController {
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping()
+    public UsersDto editUsers(@RequestParam long id, @RequestBody UsersDto dto) {
+        User user = mapper.usersDtoToUsers(dto);
+        User outUser = userService.editUser(id,user);
+        return mapper.usersToUsersDto(outUser);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PatchMapping()
     public UsersDto replaceUsers(@RequestParam long id, @RequestBody UsersDto dto) {
         User user = mapper.usersDtoToUsers(dto);
         User outUser = userService.replaceUser(id,user);
         return mapper.usersToUsersDto(outUser);
     }
-
-//    @PatchMapping()
-//    public UsersDto replaceUsers(@RequestParam long id, @RequestBody UsersDto dto) {
-//        User user = mapper.usersDtoToUsers(dto);
-//        User outUser = userService.replaceUser(id,user);
-//        return mapper.usersToUsersDto(outUser);
-//    }
 
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping()

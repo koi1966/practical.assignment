@@ -17,4 +17,5 @@ public interface UserService {
 
     User replaceUser(long id, User user);
 
+    User editUser(long id, User user);
 }

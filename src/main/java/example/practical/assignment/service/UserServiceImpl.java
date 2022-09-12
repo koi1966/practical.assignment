@@ -59,13 +59,47 @@ public class UserServiceImpl implements UserService {
         Optional<User> userOptional = usersRepository.findById(id);
         // проверить на null
         User user = userOptional.get();
+
+        if (input.getName() != null)
+        {
+            user.setName(input.getName());
+        }
+        if   (input.getLastName() != null)
+        {
+            user.setLastName(input.getLastName());
+        }
+
+        if (input.getEmail() != null)
+        {
+            user.setEmail(input.getEmail());
+        }
+        if (input.getPhone() != null)
+        {
+            user.setPhone(input.getPhone());
+        }
+        if (input.getBorn() != null)
+        {
+            user.setBorn(input.getBorn());
+        }
+        if (input.getAddress() != null)
+        {
+            user.setPhone(input.getAddress());
+        }
+        return usersRepository.save(user);
+    }
+
+    @Override
+    public User editUser(long id, User input) {
+        log.info("Replace user by id : {}", id);
+        Optional<User> userOptional = usersRepository.findById(id);
+        // проверить на null
+        User user = userOptional.get();
         user.setName(input.getName());
         user.setLastName(input.getLastName());
         user.setEmail(input.getEmail());
         user.setPhone(input.getPhone());
         user.setBorn(input.getBorn());
         user.setAddress(input.getAddress());
-//if
         return usersRepository.save(user);
     }
 
