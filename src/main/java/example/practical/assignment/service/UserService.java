@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface UserService {
-    List<User> usersList(int age);
+    List<User> usersAll();
 
     User addUsers(User user) throws AgeException;
 

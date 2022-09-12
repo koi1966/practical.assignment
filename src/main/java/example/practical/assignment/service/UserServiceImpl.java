@@ -23,9 +23,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> usersList(int age) {
+    public List<User> usersAll() {
+
         return usersRepository.findAll();
     }
+
     @Override
     public User addUsers(User user) {
 
@@ -63,7 +65,7 @@ public class UserServiceImpl implements UserService {
         user.setPhone(input.getPhone());
         user.setBorn(input.getBorn());
         user.setAddress(input.getAddress());
-
+//if
         return usersRepository.save(user);
     }
 
