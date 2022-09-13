@@ -15,7 +15,7 @@ public interface UserService {
 
     List<User> findUserBornBetween(LocalDate dateFirst, LocalDate dateLast);
 
-    User replaceUser(long id, User user);
-
     User editUser(long id, User user);
+
+    User replaceUser(long id, User user);
 }

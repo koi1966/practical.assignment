@@ -15,7 +15,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
 @SpringBootTest
 @AutoConfigureMockMvc
 @Transactional
@@ -26,9 +25,6 @@ class UsersControllerTest {
     private UserService userService;
 
     private MockMvc mockMvc;
-    UsersControllerTest(MockMvc mockMvc) {
-        this.mockMvc = mockMvc;
-    }
 
     @Test
     void searchAll() throws Exception {
@@ -47,4 +43,33 @@ class UsersControllerTest {
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$.[0].name").value("Jack"));
     }
+
+    @Test
+    void editUser() throws Exception {
+        User user = new User();
+        user.setName("Jack");
+        user.setLastName("Jackson");
+        user.setBorn(LocalDate.ofEpochDay(2000 - 07 - 15));
+        user.setEmail("umatu@meta.ua");
+        user.setAddress("Zhytomir");
+        user.setPhone("0631234567");
+        User userSave = userService.addUsers(user);
+
+        final UserDto userDto = new UserDto();
+        userDto.setEmail("newEmail@mail.com");
+        userDto.setName("NEW");
+        userDto.setLastName("JacksonNew");
+
+        String json = "{\"email\" : \"newEmail@mail.com\", \"name\" : \"NEW\", \"lastName\" : \"JacksonNew\", \"born\" : \"2002-07-15\"}";
+
+        mockMvc.perform(put("/users/?id=" + userSave.getId()).content(json)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+        final User savedUser = userRepository.findById(userSave.getId()).get();
+        Assertions.assertEquals(userDto.getEmail(), savedUser.getEmail());
+        Assertions.assertEquals(userDto.getName(), savedUser.getName());
+        Assertions.assertEquals(userDto.getLastName(), savedUser.getLastName());
+        Assertions.assertEquals("2002-07-15", savedUser.getBorn().toString());
+    }
+
 }

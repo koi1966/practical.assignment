@@ -23,8 +23,6 @@ public class User {
     @Column(nullable = false)
     private String name;
 
-//    2.1. Create user. It allows to register users who are more than [18] years old.
-//    The value [18] should be taken from properties file.
     @Column(nullable = false)
     private String lastName;
 

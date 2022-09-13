@@ -1,6 +1,7 @@
 package example.practical.assignment.service;
 
 import example.practical.assignment.exception.AgeException;
+import example.practical.assignment.exception.AppException;
 import example.practical.assignment.models.User;
 import example.practical.assignment.models.repo.UsersRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -52,10 +53,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User replaceUser(long id, User input) {
+    public User editUser(long id, User input) {
         log.info("Replace user by id : {}", id);
         Optional<User> userOptional = usersRepository.findById(id);
-        // проверить на null
+        if (userOptional.isEmpty())
+        {
+            throw new AppException("User not found.");
+        }
         User user = userOptional.get();
 
         if (input.getName() != null)
@@ -87,9 +91,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User editUser(long id, User input) {
+    public User replaceUser(long id, User input) {
         log.info("Replace user by id : {}", id);
         Optional<User> userOptional = usersRepository.findById(id);
+        if (userOptional.isEmpty())
+        {
+            throw new AppException("User not found.");
+        }
         User user = userOptional.get();
         user.setName(input.getName());
         user.setLastName(input.getLastName());

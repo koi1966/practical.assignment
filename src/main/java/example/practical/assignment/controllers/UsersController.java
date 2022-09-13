@@ -40,9 +40,9 @@ public class UsersController {
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping()
-    public UsersDto editUsers(@RequestParam long id, @RequestBody UsersDto dto) {
+    public UserDto editUsers(@RequestParam long id, @Valid @RequestBody UserDto dto) {
         User user = mapper.usersDtoToUsers(dto);
-        User outUser = userService.editUser(id,user);
+        User outUser = userService.replaceUser(id,user);
         return mapper.usersToUsersDto(outUser);
     }
 
@@ -50,7 +50,7 @@ public class UsersController {
     @PatchMapping()
     public UsersDto replaceUsers(@RequestParam long id, @RequestBody UsersDto dto) {
         User user = mapper.usersDtoToUsers(dto);
-        User outUser = userService.replaceUser(id,user);
+        User outUser = userService.editUser(id,user);
         return mapper.usersToUsersDto(outUser);
     }
 
@@ -80,7 +80,6 @@ public class UsersController {
         List<User> users = userService.usersAll();
         return  mapper.map(users);
     }
-
 
     @ExceptionHandler(AppException.class)
     public ResponseEntity<ErrorMessage> handleException(AppException exception) {
