@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
@@ -21,20 +20,22 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @Transactional
 class UsersControllerTest {
-    @Autowired
-    private MockMvc mockMvc;
+
+
     @Autowired
     private UserService userService;
 
-    //    private final Mapper mapper = Mappers.getMapper(Mapper.class);
-
+    private MockMvc mockMvc;
+    UsersControllerTest(MockMvc mockMvc) {
+        this.mockMvc = mockMvc;
+    }
 
     @Test
-
     void searchAll() throws Exception {
+
         User user = new User();
-        user.setName("Max");
-        user.setLastName("Olsha");
+        user.setName("Jack");
+        user.setLastName("Jackson");
         user.setBorn(LocalDate.ofEpochDay(2000 - 07 - 15));
         user.setEmail("umatu@meta.ua");
         user.setAddress("Zhytomir");
@@ -44,7 +45,6 @@ class UsersControllerTest {
         mockMvc.perform(get("/users/all"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())
-                .andExpect(jsonPath("$.[0].name").value("Max"));
+                .andExpect(jsonPath("$.[0].name").value("Jack"));
     }
-
 }
