@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> usersAll() {
 
-        return usersRepository.findAll();
+        return userRepository.findAll();
     }
 
     @Override
@@ -36,12 +36,12 @@ public class UserServiceImpl implements UserService {
             throw new AgeException("User under 18 years old  ");
         }
         log.info("User add: {}", user);
-        return  usersRepository.save(user);
+        return  userRepository.save(user);
     }
     @Override
     public User deleteUsers(Long id) {
         log.info("User delete on : {} ", id);
-        usersRepository.deleteById(id);
+        userRepository.deleteById(id);
         return null;
     }
 
@@ -49,13 +49,13 @@ public class UserServiceImpl implements UserService {
     public List<User> findUserBornBetween(LocalDate dateFirst, LocalDate dateLast) {
         log.info("Find all users by date first : {} on date last {}", dateFirst,dateLast);
 
-        return usersRepository.findByBornBetween(dateFirst,dateLast);
+        return userRepository.findByBornBetween(dateFirst,dateLast);
     }
 
     @Override
     public User editUser(long id, User input) {
         log.info("Replace user by id : {}", id);
-        Optional<User> userOptional = usersRepository.findById(id);
+        Optional<User> userOptional = userRepository.findById(id);
         if (userOptional.isEmpty())
         {
             throw new AppException("User not found.");
@@ -87,13 +87,13 @@ public class UserServiceImpl implements UserService {
         {
             user.setPhone(input.getAddress());
         }
-        return usersRepository.save(user);
+        return userRepository.save(user);
     }
 
     @Override
     public User replaceUser(long id, User input) {
         log.info("Replace user by id : {}", id);
-        Optional<User> userOptional = usersRepository.findById(id);
+        Optional<User> userOptional = userRepository.findById(id);
         if (userOptional.isEmpty())
         {
             throw new AppException("User not found.");
@@ -105,7 +105,7 @@ public class UserServiceImpl implements UserService {
         user.setPhone(input.getPhone());
         user.setBorn(input.getBorn());
         user.setAddress(input.getAddress());
-        return usersRepository.save(user);
+        return userRepository.save(user);
     }
 
 }

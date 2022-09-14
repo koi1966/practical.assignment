@@ -2,6 +2,7 @@ package example.practical.assignment.controllers;
 
 import example.practical.assignment.exception.AppException;
 import example.practical.assignment.mapper.Mapper;
+
 import example.practical.assignment.models.User;
 import example.practical.assignment.models.dto.UsersDto;
 import example.practical.assignment.service.ErrorMessage;

@@ -1,7 +1,7 @@
 package example.practical.assignment.mapper;
 
 import example.practical.assignment.models.User;
-import example.practical.assignment.models.dto.UsersDto;
+import example.practical.assignment.models.dto.UserDto;
 
 import java.util.List;
 
