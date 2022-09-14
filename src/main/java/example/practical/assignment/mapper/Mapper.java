@@ -7,7 +7,8 @@ import java.util.List;
 
 @org.mapstruct.Mapper
 public interface Mapper {
-    UsersDto usersToUsersDto(User user);
-    User usersDtoToUsers(UsersDto usersDTO);
-    List<UsersDto> map(List<User> userList);
+
+    UserDto usersToUsersDto(User user);
+    User usersDtoToUsers(UserDto userDTO);
+    List<UserDto> map(List<User> userList);
 }

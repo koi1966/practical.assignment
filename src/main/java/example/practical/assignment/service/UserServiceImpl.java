@@ -3,7 +3,7 @@ package example.practical.assignment.service;
 import example.practical.assignment.exception.AgeException;
 import example.practical.assignment.exception.AppException;
 import example.practical.assignment.models.User;
-import example.practical.assignment.models.repo.UsersRepository;
+import example.practical.assignment.models.repo.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -15,12 +15,13 @@ import java.util.Optional;
 @Slf4j
 @Service
 public class UserServiceImpl implements UserService {
-    private final UsersRepository usersRepository;
+    private final UserRepository userRepository;
+
     @Value("${user.age}")
     private int userAge;
 
-    public UserServiceImpl(UsersRepository usersRepository) {
-        this.usersRepository = usersRepository;
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Override

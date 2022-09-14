@@ -12,7 +12,7 @@ import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
-public class UsersDto {
+public class UserDto {
     private Long id;
     @NotBlank
     private String name;

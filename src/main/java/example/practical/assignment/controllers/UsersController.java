@@ -4,7 +4,7 @@ import example.practical.assignment.exception.AppException;
 import example.practical.assignment.mapper.Mapper;
 
 import example.practical.assignment.models.User;
-import example.practical.assignment.models.dto.UsersDto;
+import example.practical.assignment.models.dto.UserDto;
 import example.practical.assignment.service.ErrorMessage;
 import example.practical.assignment.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +32,7 @@ public class UsersController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public UsersDto saveUser(@Valid @RequestBody UsersDto dto) {
+    public UserDto saveUser(@Valid @RequestBody UserDto dto) {
         User user = mapper.usersDtoToUsers(dto);
         User saved = userService.addUsers(user);
 
@@ -49,7 +49,7 @@ public class UsersController {
 
     @ResponseStatus(HttpStatus.OK)
     @PatchMapping()
-    public UsersDto replaceUsers(@RequestParam long id, @RequestBody UsersDto dto) {
+    public UserDto replaceUsers(@RequestParam long id, @RequestBody UserDto dto) {
         User user = mapper.usersDtoToUsers(dto);
         User outUser = userService.editUser(id,user);
         return mapper.usersToUsersDto(outUser);
@@ -57,7 +57,7 @@ public class UsersController {
 
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping()
-    public UsersDto deleteUser(@RequestParam long id) {
+    public UserDto deleteUser(@RequestParam long id) {
         userService.deleteUsers(id);
         log.info("User delete id: {}", id);
         return null;
@@ -65,7 +65,7 @@ public class UsersController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping()
-    public List<UsersDto> searchUser(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFirst, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateLast) {
+    public List<UserDto> searchUser(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFirst, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateLast) {
         if (dateFirst.isAfter(dateLast)) {
             System.out.println(String.format("Date %s comes after %s", dateFirst, dateLast));
             throw new AppException(String.format("Date %s comes after %s", dateFirst, dateLast));
@@ -77,7 +77,7 @@ public class UsersController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/all")
-    public List<UsersDto> searchAll(){
+    public List<UserDto> searchAll(){
         List<User> users = userService.usersAll();
         return  mapper.map(users);
     }

@@ -1,17 +1,21 @@
 package example.practical.assignment.controllers;
 
 import example.practical.assignment.models.User;
+import example.practical.assignment.models.dto.UserDto;
+import example.practical.assignment.models.repo.UserRepository;
 import example.practical.assignment.service.UserService;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -20,10 +24,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional
 class UsersControllerTest {
 
-
+    @Autowired
+    private UserRepository userRepository;
     @Autowired
     private UserService userService;
-
+    @Autowired
     private MockMvc mockMvc;
 
     @Test
